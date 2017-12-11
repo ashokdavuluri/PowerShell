@@ -1,0 +1,90 @@
+GetResults();
+let ResultData: any[] = [];
+function Ready(): void {
+    let outputContent: any[] = [];
+    let content: any[] = [];
+    let results: any[] = ResultData;
+    console.log(results + ' ' + results.length);
+    if (results.length > 0) {
+        let classType:string;
+        if (results.length < 3) { jQuery('#testAgainAlertLinkId').removeClass("hidden") }
+        results.forEach((currentRsult, index) => {
+            if (Number(currentRsult.Percentage) >= 65) { classType = "panel-success" } else { classType = "panel-danger" }
+            content.push(`<div class="col-md-4" > 
+                <div class="panel ${classType}" id= "attempt${index+1}" >
+                <div class="panel-heading" > Attempt - ${(index+1)} </div>
+                        <div class="panel-body">
+                            Date: ${currentRsult.DateOfAttempt}<br/>
+                            Percentage:${currentRsult.Percentage}%  
+                        </div>
+                </div>
+                </div>`)
+        });
+        outputContent.push(content.join(''));
+        document.getElementById('AttemptsId').innerHTML=outputContent.join('');
+    }
+    else {
+        jQuery('#testAlertLinkId').removeClass("hidden")
+    }
+}
+function GetResults(): any[]{
+    
+    $.ajax({
+                type: 'Get',
+                url: 'GetResults',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    // Do something interesting here.
+                    console.log(data);
+                    ResultData=data;
+                    Ready();
+                },
+                error: function (error) {
+                    console.log(error);
+                    return error;
+                }
+    });
+    return ResultData;
+}
+
+function GetEmployeeResults(): any[] {
+    let results: any[] = [
+        {
+            Date: "10th Nov 2017",
+            Percentage: 60,
+            CorrectedQuestions: 30
+        }
+                ,
+        {
+            Date: "25th nov 2017",
+            Percentage: 64,
+            CorrectedQuestions: 32
+        }
+        ,
+        {
+            Date: "4th dec 2017",
+            Percentage: 70,
+            CorrectedQuestions: 35}
+    ];
+    //let localStorageResults: any[] = [];
+    //localStorageResults.push({
+    //    Date: "10th Nov 2017",
+    //    Percentage: 60,
+    //    CorrectedQuestions: 30
+    //});
+    //localStorageResults = JSON.parse(localStorage.getItem("results"));
+    //console.log(localStorageResults)
+    //localStorageResults.push({
+    //    Date: "10th Nov 2017",
+    //    Percentage: 60,
+    //    CorrectedQuestions: 30
+    //});
+    //localStorageResults.push({
+    //    Date: Date.now, Percentage: Number(JSON.parse(localStorage.getItem("correctQuestions")))*50,
+    //    CorrectedQuestions: Number(JSON.parse(localStorage.getItem("correctQuestions")))
+    //});
+    //localStorage.setItem("results", JSON.stringify(localStorageResults));
+    //console.log(JSON.parse(localStorage.getItem("correctQuestions")));
+    return results;
+}
