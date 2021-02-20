@@ -1,6 +1,6 @@
 ﻿# By Tom Chantler - https://tomssl.com/2019/04/30/a-better-way-to-add-and-remove-windows-hosts-file-entries/ 
 param([string]$DesiredIP = "127.0.0.1" ,
-[string]$Hostname = "gwsuathangfire.autodecisioningplatform.com" ,
+[string]$Hostname = "hostname.com" ,
 [bool]$CheckHostnameOnly = $false) 
 # Adds entry to the hosts file. 
 #Requires -RunAsAdministrator 
